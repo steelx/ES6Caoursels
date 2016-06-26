@@ -1,6 +1,7 @@
 extends _layouts/base
 
 include _modules/link/link
+include _modules/carousel/carousel
 
 block content
   .container
@@ -12,4 +13,7 @@ block content
         and start mixing up something awesome.
       p
         img.logo(src="images/yeogurt-swirl.png", width="75px")
+
+      mixin carousel()
+
   code.version v1.5.3
