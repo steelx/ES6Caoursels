@@ -52,3 +52,10 @@ The tasks are as follows:
 `gulp test`: Lints all `*.js` file in the `source` folder using eslint
 
 ***Adding the `--debug` option to any gulp task displays extra debugging information (ex. data being loaded into your templates)***
+
+Setup => 
+```
+npm install -g gulp
+npm install
+gulp serve
+```
