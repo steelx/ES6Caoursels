@@ -18,6 +18,7 @@ class Carousel {
 
     //init
     this.setUlWidth();
+    this.displayCount();
     this.registerEvents();
     this.timer();
   }
@@ -29,16 +30,21 @@ class Carousel {
   }
 
   displayCount(){
-    this.controlsSpan.text("Current: " + (this.currentImage % this.slidesCount + 1));
+    this.controlsSpan.text("Current: " + (this.slideRemainder() + 1));
   }
 
   setUlWidth(){
     this.ul.css('width', this.slidesCount * this.slideWidth);
   }
+  
+  slideRemainder() {
+  	return this.currentImage % this.slidesCount;
+  }
 
   slideLeft(){
     window.clearTimeout(this.slideInterval);
-    if(this.currentImage === this.slidesCount - 1) {
+    //it its last img slide to first
+    if(this.slideRemainder() === this.slidesCount - 1) {
       this.ul.animate({
         "margin-left": 0
       }, () => {
@@ -47,35 +53,39 @@ class Carousel {
       });
     } else {
       this.ul.animate({
-        "margin-left": (this.currentImage % this.slidesCount + 1) * -300
+        "margin-left": (this.slideRemainder() + 1) * -300
       }, () => {
-        this.currentImage+=1;
+        this.currentImage++;
         this.displayCount();
       });
     }
 
     this.timer();
   }
-
+  
+  
   slideRight(){
     window.clearTimeout(this.slideInterval);
-    if(this.currentImage === 0) {
+    //it its first img slide to last
+    if(this.slideRemainder() === 0) {
       this.ul.animate({
-        "margin-left":  (this.slidesCount - 1) * -300
+        "margin-left": (this.slidesCount - 1) * -300
       }, () => {
-        this.currentImage = 0;
+        this.currentImage = (this.slidesCount - 1);
         this.displayCount();
       });
     } else {
-      this.ul.animate({
-        "margin-left": "+=300px"
+    	this.ul.animate({
+        "margin-left": (this.slideRemainder() - 1) * -300
       }, () => {
-        this.currentImage += 1;
+        this.currentImage = (this.slideRemainder() - 1);
         this.displayCount();
       });
     }
+
     this.timer();
   }
+
 
   registerEvents() {
     this.controlsLeft.on('click', (event) => {
@@ -88,8 +98,7 @@ class Carousel {
       this.slideRight();
     });
   }
-
-
+  
 
 }
 
